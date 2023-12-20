@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "409645184020",
+    "project_id": "buzz-ceb44",
+    "storage_bucket": "buzz-ceb44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409645184020:android:fdd6055d9f3dce7873a301",
+        "android_client_info": {
+          "package_name": "com.example.buzzz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh2lRTmIgf9JRxhsf230D67d0xDtf5JvY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

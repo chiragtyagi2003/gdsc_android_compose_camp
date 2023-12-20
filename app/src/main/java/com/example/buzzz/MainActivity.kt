@@ -31,12 +31,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.buzzz.ui.theme.AppNavigation
 import com.example.buzzz.ui.theme.BuzzzTheme
-
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
+
         setContent {
             BuzzzTheme {
 

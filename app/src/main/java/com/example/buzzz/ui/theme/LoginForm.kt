@@ -34,8 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 
-
+private val auth: FirebaseAuth = Firebase.auth
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginForm(navController: NavHostController) {
@@ -80,13 +84,13 @@ fun LoginForm(navController: NavHostController) {
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                    // Handle login when Done button is clicked
-                    performLogin(username.text, password.text, context)
-                }
-            ),
+//            keyboardActions = KeyboardActions(
+//                onDone = {
+//                    keyboardController?.hide()
+//                    // Handle login when Done button is clicked
+//                    performLogin(username.text, password.text, context, navController)
+//                }
+//            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -97,7 +101,7 @@ fun LoginForm(navController: NavHostController) {
         Button(
             onClick = {
                 // Handle login button click
-                performLogin(username.text, password.text, context)
+                performLogin(username.text, password.text, context, navController)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,10 +135,23 @@ fun LoginForm(navController: NavHostController) {
     }
 }
 
-private fun performLogin(username: String, password: String, context: Context) {
-    // Add your login logic here
-    // For demonstration purposes, we'll show a toast message
-    Toast.makeText(context, "Logging in with $username", Toast.LENGTH_SHORT).show()
+private fun performLogin(username: String, password: String, context: Context, navController: NavHostController) {
+    // firebase auth login
+    auth.signInWithEmailAndPassword(username, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                val user: FirebaseUser? = auth.currentUser
+                Toast.makeText(context, "Login successful as ${user?.email}", Toast.LENGTH_SHORT).show()
+
+                // navigate to home screen
+                navController.navigate("home")
+
+            } else {
+                // If sign in fails, display a message to the user.
+                Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show()
+            }
+        }
 }
 
 

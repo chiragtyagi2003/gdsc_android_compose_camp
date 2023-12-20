@@ -31,5 +31,9 @@ fun AppNavigation(navController: NavHostController) {
         composable("signup"){
             SignUpForm(navController)
         }
+        composable("home"){
+            PhotoListScreen(navController)
+        }
+
     }
 }

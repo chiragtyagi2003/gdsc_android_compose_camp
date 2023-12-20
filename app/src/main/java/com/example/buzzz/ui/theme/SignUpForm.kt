@@ -33,6 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
+
+
+private val auth: FirebaseAuth = Firebase.auth
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -91,13 +99,13 @@ fun SignUpForm(navController: NavHostController) {
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyboardController?.hide()
-                    // Handle login when Done button is clicked
-                    performSignUp(username.text, password.text, context)
-                }
-            ),
+//            keyboardActions = KeyboardActions(
+//                onDone = {
+//                    keyboardController?.hide()
+//                    // Handle login when Done button is clicked
+//                    performSignUp(username.text, password.text, context)
+//                }
+//            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -108,7 +116,7 @@ fun SignUpForm(navController: NavHostController) {
         Button(
             onClick = {
                 // Handle signup button click
-                performSignUp(username.text, password.text, context)
+                performSignUp(username.text, password.text, context, navController)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,13 +124,37 @@ fun SignUpForm(navController: NavHostController) {
         ) {
             Text("Sign Up")
         }
+
+        // back to login button
+        Button(onClick = {
+                         navController.navigate("login")
+                         },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+
+        ) {
+            Text("Have An Account? ")
+        }
     }
 }
 
-private fun performSignUp(username: String, password: String, context: Context) {
-    // Add your signup logic here
-    // For demonstration purposes, we'll show a toast message
-    Toast.makeText(context, "Signing up with $username", Toast.LENGTH_SHORT).show()
+private fun performSignUp(username: String, password: String, context: Context, navController: NavHostController) {
+    // Firebase authentication
+    auth.createUserWithEmailAndPassword(username, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign up success, update UI with the signed-up user's information
+                val user: FirebaseUser? = auth.currentUser
+                Toast.makeText(context, "Sign up successful as ${user?.email}", Toast.LENGTH_SHORT).show()
+
+                // navigate to home screen
+                navController.navigate("home")
+            } else {
+                // If sign up fails, display a message to the user.
+                Toast.makeText(context, "Sign up failed. ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
 }
 
 
