@@ -1,5 +1,6 @@
 package com.example.buzzz
 
+import android.graphics.Paint.Align
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -160,20 +162,43 @@ fun SplashScreen2(navController: NavHostController, modifier: Modifier = Modifie
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Chill vibes, real connections. ",
-                fontSize = 35.sp,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp)
-            )
 
-            Text(
-                text = "Join Buzz for a Gen Z twist on life's coolest moments.",
-                fontSize = 35.sp,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp)
-            )
+            Column (
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
+            ){
+                Text(
+                    text = "Join Buzz",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 55.sp,
+                    color = White,
+                )
 
+                Text(
+                    text = "Today!",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 55.sp,
+                    color = White,
+
+                    )
+
+                Spacer(modifier = Modifier.height(25.dp))
+
+                Text(
+                    text = "A GenZ Social!",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 35.sp,
+                    color = White,
+
+                    )
+
+
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             Button(
                 onClick = {
@@ -206,12 +231,17 @@ fun SplashScreen3(navController: NavHostController, modifier: Modifier = Modifie
             .fillMaxSize()
             .background(Color.Black) // Set the background color here
     ) {
-        Image(
-            painter = image,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
 
-        )
+            Image(
+                painter = image,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
+                    .align(alignment = Alignment.TopStart)
+
+            )
+
 
         Column (
             modifier = Modifier
@@ -220,15 +250,41 @@ fun SplashScreen3(navController: NavHostController, modifier: Modifier = Modifie
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(
-                text = "Ready, Set and Vibe.",
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal,
-                fontSize = 44.sp,
-                color = Color.White,
+            Column (
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
+            ){
+                Text(
+                    text = "READY",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 84.sp,
+                    color = White,
+                    textAlign = TextAlign.Left
+
 
                 )
+
+                Text(
+                    text = "SET",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 84.sp,
+                    color = White,
+                )
+
+                Text(
+                    text = "VIBE",
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 84.sp,
+                    color = White,
+
+                    )
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 onClick = {
                     // Handle button click
@@ -258,5 +314,6 @@ fun GreetingPreview() {
     val navController = rememberNavController() // Provide a mock NavHostController
     BuzzzTheme {
         AppNavigation(navController = navController)
+//        SplashScreen2(navController = navController)
     }
 }
