@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -117,7 +118,9 @@ fun SplashScreen1(navController: NavHostController, modifier: Modifier = Modifie
                     .padding(8.dp)
                     .height(50.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(16.dp),
+                
+
             ) {
                 Text(
                     text = "Get Started Now!",
