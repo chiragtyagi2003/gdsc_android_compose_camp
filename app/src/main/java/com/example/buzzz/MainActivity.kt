@@ -118,15 +118,17 @@ fun SplashScreen1(navController: NavHostController, modifier: Modifier = Modifie
                     .padding(8.dp)
                     .height(50.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                
+                shape = RoundedCornerShape(18.dp),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+
 
             ) {
                 Text(
                     text = "Get Started Now!",
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.W500,
-                    fontSize = 24.sp
+                    fontSize = 24.sp,
+//                    color = Color.Black
                 )
             }
         }
@@ -159,14 +161,19 @@ fun SplashScreen2(navController: NavHostController, modifier: Modifier = Modifie
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Chill vibes, real connections. " +
-                        "Join Buzz for a Gen Z twist on life's coolest moments.",
+                text = "Chill vibes, real connections. ",
                 fontSize = 35.sp,
                 color = Color.White,
                 modifier = Modifier.padding(8.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Join Buzz for a Gen Z twist on life's coolest moments.",
+                fontSize = 35.sp,
+                color = Color.White,
+                modifier = Modifier.padding(8.dp)
+            )
+
 
             Button(
                 onClick = {
@@ -179,7 +186,12 @@ fun SplashScreen2(navController: NavHostController, modifier: Modifier = Modifie
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Text(text = "Find your Vibe!")
+                Text(
+                    text = "Find your Vibe!",
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 24.sp,
+                    )
             }
         }
     }
@@ -212,7 +224,7 @@ fun SplashScreen3(navController: NavHostController, modifier: Modifier = Modifie
                 text = "Ready, Set and Vibe.",
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Normal,
-                fontSize = 64.sp,
+                fontSize = 44.sp,
                 color = Color.White,
 
                 )
@@ -220,19 +232,23 @@ fun SplashScreen3(navController: NavHostController, modifier: Modifier = Modifie
             Button(
                 onClick = {
                     // Handle button click
+                    navController.navigate("login")
+
                 },
                 modifier = Modifier
                     .padding(16.dp)
                     .clip(RoundedCornerShape(16.dp))
             ) {
                 Text(
-                    text = "SignUp/Login",
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 64.sp
+                    text = "Login",
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 24.sp,
                 )
             }
         }
+
+
     }
 }
 

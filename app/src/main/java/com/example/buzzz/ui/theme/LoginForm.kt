@@ -32,11 +32,13 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginForm() {
+fun LoginForm(navController: NavHostController) {
     var username by remember { mutableStateOf(TextFieldValue()) }
     var password by remember { mutableStateOf(TextFieldValue()) }
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -104,6 +106,29 @@ fun LoginForm() {
             Text("Login")
         }
     }
+
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+    ){
+            Text("New User?")
+
+            Button(
+                onClick = {
+                    // Handle login button click
+                    navController.navigate("signup")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ){
+                Text("Create Account")
+            }
+
+    }
 }
 
 private fun performLogin(username: String, password: String, context: Context) {
@@ -118,9 +143,10 @@ private fun performLogin(username: String, password: String, context: Context) {
 fun LoginFormPreview() {
     // You can customize the preview parameters, such as the device and theme
     // For example, you can use previewDevice = "Pixel 4" and previewTheme = "light"
+    val navController = rememberNavController()
     MaterialTheme {
         Surface {
-            LoginForm()
+            LoginForm(navController)
         }
     }
 }

@@ -25,5 +25,11 @@ fun AppNavigation(navController: NavHostController) {
         composable("splashScreen3") {
             SplashScreen3(navController)
         }
+        composable("login"){
+            LoginForm(navController)
+        }
+        composable("signup"){
+            SignUpForm(navController)
+        }
     }
 }

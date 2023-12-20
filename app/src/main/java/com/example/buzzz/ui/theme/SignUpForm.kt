@@ -31,10 +31,12 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SignUpForm() {
+fun SignUpForm(navController: NavHostController) {
     var username by remember { mutableStateOf(TextFieldValue()) }
     var password by remember { mutableStateOf(TextFieldValue()) }
     var name by remember { mutableStateOf(TextFieldValue()) }
@@ -129,9 +131,10 @@ private fun performSignUp(username: String, password: String, context: Context) 
 fun SignUpFormPreview() {
     // You can customize the preview parameters, such as the device and theme
     // For example, you can use previewDevice = "Pixel 4" and previewTheme = "light"
+    val navController = rememberNavController()
     MaterialTheme {
         Surface {
-            SignUpForm()
+            SignUpForm(navController)
         }
     }
 }
