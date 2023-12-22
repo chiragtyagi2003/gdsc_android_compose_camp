@@ -93,7 +93,7 @@ fun SplashScreen1(navController: NavHostController, modifier: Modifier = Modifie
             Text(
                 text = "  Find People you Vibe With!",
                 color = Color.White,
-                fontSize = 30.sp,
+                fontSize = 25.sp,
                 modifier = Modifier.padding(2.dp)
             )
         }

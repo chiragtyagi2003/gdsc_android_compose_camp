@@ -37,6 +37,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+// Import the Log class
+import android.util.Log
+import androidx.navigation.NavController
 
 
 private val auth: FirebaseAuth = Firebase.auth
@@ -116,7 +120,7 @@ fun SignUpForm(navController: NavHostController) {
         Button(
             onClick = {
                 // Handle signup button click
-                performSignUp(username.text, password.text, context, navController)
+                performSignUp(name.text, username.text, password.text, context, navController)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,23 +143,51 @@ fun SignUpForm(navController: NavHostController) {
     }
 }
 
-private fun performSignUp(username: String, password: String, context: Context, navController: NavHostController) {
+private fun performSignUp(name: String, username: String, password: String, context: Context, navController: NavController) {
     // Firebase authentication
     auth.createUserWithEmailAndPassword(username, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                // Sign up success, update UI with the signed-up user's information
                 val user: FirebaseUser? = auth.currentUser
-                Toast.makeText(context, "Sign up successful as ${user?.email}", Toast.LENGTH_SHORT).show()
+                if (user?.email?.endsWith("@mail.jiit.ac.in") == true) {
+                    // Sign up success, update UI with the signed-up user's information
+                    Toast.makeText(context, "Sign up successful as ${user.email}", Toast.LENGTH_SHORT).show()
 
-                // navigate to home screen
-                navController.navigate("home")
+                    // Store additional user information in Firestore
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        val uid = currentUser.uid
+                        val userMap = mapOf(
+                            "uid" to uid,
+                            "name" to name,
+                            "username" to user.email
+                        )
+
+                        val firestore = FirebaseFirestore.getInstance()
+                        firestore.collection("users").document(uid)
+                            .set(userMap)
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "User information stored successfully")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "Error storing user information", e)
+                            }
+                    }
+
+                    // Navigate to home screen
+                    navController.navigate("home")
+                } else {
+                    // If the email doesn't match the required domain, sign out the user and show an error message.
+                    auth.signOut()
+                    Toast.makeText(context, "Invalid email domain. Please use @mail.jiit.ac.in", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 // If sign up fails, display a message to the user.
                 Toast.makeText(context, "Sign up failed. ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
 }
+
 
 
 @Composable

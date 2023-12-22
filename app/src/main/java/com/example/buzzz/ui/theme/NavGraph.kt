@@ -34,6 +34,11 @@ fun AppNavigation(navController: NavHostController) {
         composable("home"){
             PhotoListScreen(navController)
         }
+        composable("groupChat")
+        {
+            ChatScreen()
+        }
+
 
     }
 }

@@ -59,7 +59,7 @@ fun LoginForm(navController: NavHostController) {
     ) {
         Text(
             text = "Login Screen",
-            fontSize = 56.sp
+            fontSize = 36.sp
             )
 
         // Username TextField
@@ -136,7 +136,13 @@ fun LoginForm(navController: NavHostController) {
 }
 
 private fun performLogin(username: String, password: String, context: Context, navController: NavHostController) {
-    // firebase auth login
+    // Check if the email ends with "@mail.jiit.ac.in"
+    if (!username.endsWith("@mail.jiit.ac.in")) {
+        Toast.makeText(context, "Invalid email domain. Please use @mail.jiit.ac.in", Toast.LENGTH_SHORT).show()
+        return
+    }
+
+    // Firebase authentication login
     auth.signInWithEmailAndPassword(username, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -144,7 +150,7 @@ private fun performLogin(username: String, password: String, context: Context, n
                 val user: FirebaseUser? = auth.currentUser
                 Toast.makeText(context, "Login successful as ${user?.email}", Toast.LENGTH_SHORT).show()
 
-                // navigate to home screen
+                // Navigate to home screen
                 navController.navigate("home")
 
             } else {
@@ -153,6 +159,7 @@ private fun performLogin(username: String, password: String, context: Context, n
             }
         }
 }
+
 
 
 @Composable
